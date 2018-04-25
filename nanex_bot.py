@@ -9,7 +9,7 @@ def set_alarm(alert_rate, uid, table):
     # Save it in the database
     with sqlite3.connect("nanexbot.sqlite3") as db:
         cursor = db.cursor()
-        sql = 'INSERT INTO `{}` (`user_id`, `price`, `active`) VALUES ("{0}", "{1}", "1")'.format(table, uid, alert_rate)
+        sql = 'INSERT INTO `{0}` (`user_id`, `price`, `active`) VALUES ("{1}", "{2}", "1")'.format(table, uid, alert_rate)
         cursor.execute(sql)
         db.commit()
 
