@@ -1,0 +1,13 @@
+CREATE TABLE `sell` (
+	`id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`user_id`	INTEGER,
+	`price`	REAL,
+	`active`	INTEGER
+);
+
+CREATE TABLE `buy` (
+	`id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`user_id`	INTEGER,
+	`price`	REAL,
+	`active`	INTEGER
+);
