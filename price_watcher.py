@@ -58,7 +58,7 @@ def get_warnings(price):
 
 def get_user(client, uid):
     for server in client.servers:
-        user = server.get_member(int(uid))
+        user = server.get_member(str(uid))
         if user:
             return user
     print("Can't find user! (uid = {})".format(uid))
