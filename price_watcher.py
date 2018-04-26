@@ -86,6 +86,7 @@ def main():
                 if len(buy_warnings) > 0:
                     # Iterate through each users and send them a PM
                     for warning in buy_warnings:
+                        print(warning)
                         if warning[2] == current_price:
                             await client.send_message(server.get_member(warning[1]), "Your {} order might be bought! (last trade: {})".format(warning[2], current_price))
                         else:
