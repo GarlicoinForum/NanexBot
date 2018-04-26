@@ -63,7 +63,7 @@ def main():
     BOT_TOKEN = conf.get('nanexbot_conf', 'BOT_TOKEN')
 
     client = discord.Client()
-    server = discord.Server
+    server = discord.Server()
 
     @client.event
     async def on_ready():
