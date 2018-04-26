@@ -56,6 +56,15 @@ def get_warnings(price):
     return sell_alarms, buy_alarms
 
 
+def get_user(client, uid):
+    for server in client.servers:
+        user = server.get_member(uid)
+        if user:
+            return user
+    print("Can't find user! (uid = {})".format(uid))
+    return None
+
+
 def main():
     conf = configparser.RawConfigParser()
     conf.read("config.txt")
@@ -63,7 +72,6 @@ def main():
     BOT_TOKEN = conf.get('nanexbot_conf', 'BOT_TOKEN')
 
     client = discord.Client()
-    server = discord.Server()
 
     @client.event
     async def on_ready():
@@ -79,19 +87,21 @@ def main():
                 if len(sell_warnings) > 0:
                     # Iterate through each users and send them a PM
                     for warning in sell_warnings:
+                        # Load an User object using its id and the server to which the bot is connected
+
                         if warning[2] == current_price:
-                            await client.send_message(server.get_member(warning[1]), "Your {} order might be sold! (last trade: {})".format(warning[2], current_price))
+                            await client.send_message(get_user(client, warning[1]), "Your {} order might be sold! (last trade: {})".format(warning[2], current_price))
                         else:
-                            await client.send_message(server.get_member(warning[1]), "Your {} order is sold! (last trade: {})".format(warning[2], current_price))
+                            await client.send_message(get_user(client, warning[1]), "Your {} order is sold! (last trade: {})".format(warning[2], current_price))
                 if len(buy_warnings) > 0:
                     # Iterate through each users and send them a PM
                     for warning in buy_warnings:
                         if warning[2] == current_price:
                             print(int(warning[1]))
-                            await client.send_message(server.get_member(int(warning[1])), "Your {} order might be bought! (last trade: {})".format(warning[2], current_price))
+                            await client.send_message(get_user(client, warning[1]), "Your {} order might be bought! (last trade: {})".format(warning[2], current_price))
                         else:
                             print(int(warning[1]))
-                            await client.send_message(server.get_member(int(warning[1])), "Your {} order is bought! (last trade: {})".format(warning[2], current_price))
+                            await client.send_message(get_user(client, warning[1]), "Your {} order is bought! (last trade: {})".format(warning[2], current_price))
 
 
                 # Set active to 0 in the DB if the price != last trade (trade might be done, but not sure)
