@@ -77,10 +77,10 @@ def main():
     async def on_ready():
         print('Logged in as {} <@{}>'.format(client.user.name, client.user.id))
         print('------')
-        
+
         for server in client.servers:
             print(server.id)
-            print(server.members)
+            print([member.id for member in server.members])
 
         last_price = 0
         while True:
