@@ -72,14 +72,16 @@ def main():
     BOT_TOKEN = conf.get('nanexbot_conf', 'BOT_TOKEN')
 
     client = discord.Client()
-    for server in client.servers:
-        print(server.id)
-        print(server.members)
 
     @client.event
     async def on_ready():
         print('Logged in as {} <@{}>'.format(client.user.name, client.user.id))
         print('------')
+        
+        for server in client.servers:
+            print(server.id)
+            print(server.members)
+
         last_price = 0
         while True:
             current_price = get_last_rate()
