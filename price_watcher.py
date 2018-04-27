@@ -39,6 +39,7 @@ def get_active_alarms(table, price):
     with sqlite3.connect("nanexbot.sqlite3") as db:
         cursor = db.cursor()
         sql = 'SELECT `id`, `user_id`, `price` FROM {0} WHERE `active` = 1 AND `price` {1} {2}'.format(table, comp_operator[table], price)
+        print(sql)
         cursor.execute(sql)
 
         alarms = cursor.fetchall()
@@ -77,10 +78,6 @@ def main():
     async def on_ready():
         print('Logged in as {} <@{}>'.format(client.user.name, client.user.id))
         print('------')
-
-        for server in client.servers:
-            print(server.id)
-            print([member.id for member in server.members])
 
         last_price = 0
         while True:
